@@ -1,0 +1,27 @@
+---
+title: "BA 830 Group Project Team 2"
+author: Zhaoying Chen, Yanyue Fu, Hui Jiang, Tyler McMurray, Yiying Wang, and Rui Xu
+date: "12/13/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# CBD
+
+Cannabidiol, otherwise popularly known in its abbreviated and marketed form CBD, is a non-psychoactive chemical derived from hemp and marijuana plants. CBD is a fast growing craze that is spreading throughout the world and especially for the U.S. This product is being sold and talked about everywhere. You hear and see CBD in vitamins shops, new pop-up shops, in magazines, and even at your local convenience store. There are many claims to the benefits of using CBD. These claimed benefits include help with insomnia, relaxation, anxiety, depression, physical pain, and many more claimed benefits of CBD. These are just claims from popular news outlets and advocates. There is actual promising evidence for using CBD for epilepsy. A treatment containing a high dosage of CBD is being tested to treat epilepsy especially when current medication does not work. As there are many claims to the benefits to CBD there are as many ways for consuming CBD, including pills, softgels, in food products, topical applications, vapor cartridges, oil, and other various methods of consumption. CBD is taking off to say the least. However, despite the growing use and dispersion of the product there is not actually a lot of scientific research on the chemical, besides its correlation with research on Marijuana, despite it also and most often in the U.S. being derived from hemp plants. This lack of research has made our team curious if we can have an impact or contribution to discovering more about this chemical. 
+
+# Issues Regarding Legality 
+
+CBD is legal under federal laws as long as the product does not contain more than .3% THC content. However, laws vary by state with some putting more control on the sale and purchase of the substance than others. The state that this experiment took place in was Massachusetts. This state is one of the few in the United States that upon this being written also allows for legal recreational use of Marijuana, which also contains CBD naturally within the plant. Meaning that this state not only sells CBD that is legal under federal regulations, that containing less than .3% THC, but it also sells products with CBD in much higher levels of THC due to its legality in the state of Massachusetts. However, because this state is one of the few that allows for THC and we understand that much of the country and the world does not we used CBD oil that fell within the federal guidelines.  
+
+# What We Are Looking For
+
+With the growing use of these products it naturally poses the question, is there are any effects of taking the product especially in regards to cognitive function. The goal of the team is to see if there is an effect of using CBD on cognitive function. The importance of making this discovery is having a better understanding of the possible risks of taking the product and the possibility of making better legislation for the product if the effects are negatively impacting cognitive function, like possible bans on driving if you consumed the product recently. This would make for a more educated and hopefully safer populace. On the other hand, if there shows no evidence of impairing cognitive function there could be possible better legislation for allowing more legality and laissez-faire rules for CBD, which many people believe brings them great benefits and would allow for more people to try alternative means to their ailments. To sum this up the question we are looking to answer is does CBD cause an effect on cognitive function. 
+
+
+
+
+

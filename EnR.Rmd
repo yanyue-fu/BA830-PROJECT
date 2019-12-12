@@ -97,3 +97,13 @@ treat_n_gender = felm(diff ~ treatment * gender | age, data = cbd1)
 treat_n_age = felm(diff ~ treatment * age | gender, data = cbd1)
 stargazer(treat_n_gender, treat_n_age, type = "text")
 ```
+
+## Limitation We Got
+
+
+
+
+
+
+
+

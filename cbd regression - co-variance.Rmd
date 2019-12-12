@@ -1,0 +1,62 @@
+---
+title: "cbd - regression - covariation"
+author: "Rui Xu"
+date: "12/12/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r results='hide', message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lfe)
+library(stargazer)
+
+cbd = read_csv("cbd-cleaned.csv")
+```
+
+```{r}
+cbd %>%
+  mutate(treatment = ifelse(treatment == 'A', 0, 1)) %>%
+  select(id, gender = `gender (1/0)`, everything())-> cbd
+names(cbd) = str_to_lower(names(cbd))
+```
+
+     Plot by the gender and test difference in treatment group and control group. For female before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both two female groups’ performances were increased, the reaction time is dropped. But the time declined larger for females in the placebo group instead of treatment group. 
+     For males before the experiment, the reaction time for placebo group is relatively higher than treatment group. After the experiment, the reaction time for both groups was decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group. 
+     
+```{r}
+cbd %>% 
+  gather(., "before", "after", key = "time", value = "reflection_time") %>%
+  mutate(gender = ifelse(gender == 0, "female", "male")) %>%
+  mutate(treatment = ifelse(treatment == 0, "placebo", "treatment")) -> cbd1
+ggplot(cbd1, aes(x = factor(gender), y = reflection_time, fill = time)) +
+  geom_boxplot() + 
+  facet_grid(~treatment) +
+  labs(x = 'gender', y = "refection time")
+```
+
+    
+## regression about co-variance
+
+    We use fixed linear regression to inspect the covariance between the treatment and other interactive variables. Since the performance for reaction test is varied over personal physical factors, we collected the gender and age inform from participants as two interactive variables which also would affect the reaction test outcome.  We try to inspect whether there exists significantly covariance between the treatment and the variable gender and age. And for a more reliable regression outcome, we take one interactive variable as a fixed effect when we test the other interactive variable. 
+    There are the two regression, and the result is showed at the following table;
+            *difference = treatment + gender + treatment * gender*
+            *difference = treatment + age + treatment * age*
+    The result indicated that in both two regression models, the effect of CBD oil on difference in reaction time is not significant with the interacted effect from gender and age. And both the covariance of treatment to gender and the covariance of treatment to age are not significant. We cannot reject the hypothesis that there doesn’t exist any covariance between both CBD treatment to gender and CBD treatment to age. 
+
+```{r massage=FALSE, warning=FALSE}
+treat_n_gender = felm(diff ~ treatment * gender | age, data = cbd)
+treat_n_age = felm(diff ~ treatment * age | gender, data = cbd)
+stargazer(treat_n_gender, treat_n_age, type = "text")
+```
+
+  
+
+
+  
+  
+  
+  

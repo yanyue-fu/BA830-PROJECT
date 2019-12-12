@@ -1,0 +1,66 @@
+---
+title: "EDA-Reg"
+author: "YanyueFu (U41816127)"
+date: "12/11/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(tidyverse)
+library(lfe)
+library(cluster)
+library(factoextra)
+data = read_csv("cbd-cleaned.csv")
+```
+**Variable explanation**
+
+`id`: The participant's id.
+`before`: Participant's reaction time before experiment.
+`after`: Participant's reaction time after experiment.
+`AGE`: Participant's age.
+`gender (1/0)`: Participant's gender, 1 is for male and 0 is for female.
+`diff`: The difference in reaction time between pre-experiment and post-experiment (`before` - `after`).
+
+**EDA**
+To get a better understanding of our data and gain some insight through exploring data, we did the Exploratory data analysis. Figure 1 shows the difference in reaction time based on gender. All of the `difference` are above 0, means that participants will have shorter reaction time after experiment. The reduced reaction time can be explained by the manipulation in the second reaction testing. Compared with placebo group, the treatment group has less difference which indicats that the reaction time reduced less after using the CBD. There is more difference between placebo group and experiment group for female than male, which reveals that female are more easily affected by the CBD.
+
+
+
+```{r}
+data %>% ggplot(aes(x= factor(`gender (1/0)`), y = diff, fill = treatment))+
+  geom_boxplot() +
+  labs(
+       title = "Figure1: The difference in reaction time based on gender",
+       y = "difference",
+       x = "female                                             male")
+
+```
+
+Figure2 shows the average difference For Each Age Bin. Since the interval of participants' age is 18 to 35 in our experiment, we decided to separte them into 4 age bins for analysis. Age Bin By 5 (1 = 15-20, 2 = 20-25, 3 = 25-30, 4 = 30-35). However, we will not take the first range (15-20) into account because only one participant was included in this range. CBD has the greatest impact on the people among 25 to 30 years old and has least impact on people among 20 to 25 years old.
+
+
+```{r}
+data$ageRange <- findInterval(data$AGE, c(15, 20, 25, 30, 35))
+data %>% 
+  group_by(ageRange,treatment) %>% 
+  summarize(totaldiff=mean(diff)) %>% 
+  ggplot(aes(x= as.factor(ageRange), y=totaldiff,fill = treatment)) +
+  geom_col(position = "dodge") +
+  labs(title = "Figure2: Average difference For Each Age Bin", 
+       x = "Age Bin By 5 (1 = 15-20, 2 = 20-25, 3 = 25-30, 4 = 30-35)",
+       y = "Average difference of reaction time", 
+       fill = "Treatment") 
+```
+
+
+
+
+
+
+
+

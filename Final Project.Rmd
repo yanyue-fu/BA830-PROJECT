@@ -7,6 +7,18 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(tidyverse)
+library(lfe)
+library(cluster)
+library(factoextra)
+library(stargazer)
+library(e1071)
+library(gridExtra)
+
+
+data <- read.csv(file = "cbd-cleaned.csv")
+cbd = read_csv("cbd-cleaned.csv")
 ```
 
 # CBD
@@ -20,6 +32,138 @@ CBD is legal under federal laws as long as the product does not contain more tha
 # What We Are Looking For
 
 With the growing use of these products it naturally poses the question, is there are any effects of taking the product especially in regards to cognitive function. The goal of the team is to see if there is an effect of using CBD on cognitive function. The importance of making this discovery is having a better understanding of the possible risks of taking the product and the possibility of making better legislation for the product if the effects are negatively impacting cognitive function, like possible bans on driving if you consumed the product recently. This would make for a more educated and hopefully safer populace. On the other hand, if there shows no evidence of impairing cognitive function there could be possible better legislation for allowing more legality and laissez-faire rules for CBD, which many people believe brings them great benefits and would allow for more people to try alternative means to their ailments. To sum this up the question we are looking to answer is does CBD cause an effect on cognitive function. 
+
+# Our Experimental Design
+
+Our team decided to use an experiment to generate our own observations instead of relying on previous observations, an observational study. This is because we wanted to have more control over the experiment. But even more importantly it would help us to see what are limitations of our experiment are and problems that could impact our results so that we are not propagating bad research. We would be unable to tell this from observational studies or at least not know the severity from an excerpt in a paper. This is the true value of experimenting as it gives us more knowledge than the simple values of a variable could. 
+
+In this following few section we will define our experimental design but also try to summarize and show our thinking for why we did this for our experiment. 
+
+### The Experimental Unit
+
+The experimental unit of our design are individuals. More specifically they were students, teaching assistants, and a professor that were part of our team's Master's in Business Analytics program here at Boston University. It did not include every single person in the program and did include a few people outside of the program and classroom like friends. What this means is that the experimental unit was at the individual and were individuals related to our program. 
+
+The reason we decided to experiment at the individual level was because we were short on time and running this experiment in a short period and utilized people that were in natural close proximity to our experiment and team. We wanted to make sure that people participating in our experiment were completely comfortable and knowledgeable about CBD, which takes time. We also knew that not everyone in the classroom would be comfortable being part of the study, which is completely understandable, so it would be hard to find like similar classrooms to compare the results. It was a lot easier and realistic to experiment this at the individual level. Finally, you might consider why only those that were in close proximity to our team and not a more diverse group of individuals. The reason for this is due to a Boston University policy that allows for some types of experimentation and surveying, like ours, at the classroom without further review that could take too much time in the small time we have for this course. 
+
+### The Variables 
+
+The variables we collected included a cognitive test score before administration of treatment or the placebo, the cognitive test score after administration, age, gender, and finally whether they received the treatment or placebo. 
+
+The reason we decided to collect these variables are because they were easy to collect and that they were willing to disclose those results. With a type of experiment like this there could be tons of variables that could be collected that could impact how CBD could impact them. These could include, height, weight, medical conditions, and other more private information. However, these are our colleagues and mentors and would not only possibly negatively impact our relationship but that is private information we would now need to ensure its safety and we are not sure if we could or would want to do that. We did however only record a unique ID so even the age and gender metrics are separated from any identifiers to the individual. Other variables we considered but chose not to deal with our background variables. These would include setting and time that would not change. However, we could not afford to ensure these variables due to both resources and time. We were short on time so when any participant was willing to be in the experiment we used them. Also there was never any set rooms away from distraction that we could utilize during our experiment. These variables were considered but ultimately were unrealistic to try to fix or record. 
+
+
+### The Treatment
+
+The treatment group receives a 10MG dose of CBD oil with MCT oil. The placebo group is just MCT oil. The groups were randomly assigned to people. 
+
+The reason we did this is because the CBD oil product we were using already had MCT oil inside of it. We also found during the initial testing phase that a lot of the oil stuck to the cup in which was handed out to the individual. So in the final round of testing CBD was mixed with additional MCT oil in order to minimize the amount of CBD oil that stuck to the cup. We utilized oil because it was one of the fastest ways into the human body that did not require any invasive measures, like intravenously or through vaping which has health concerns on its own.
+
+
+### The Design
+
+Our team will test participants and create a baseline of their results for simple cognitive tests. We will then give the participants either a 10 MG of CBD Oil or a placebo, MCT Oil. Whether they fall into treatment or the placebo was by random assigning each participant. The participants will then hold the oil under their tongue for 60 seconds and then swallow the product. We will wait 3 minutes and resume the testing. We will compare results to see if there is a significant difference in taking the tests. The individuals will be randomly assigned to either the treatment or placebo group for the second administration of the test. An important note is that we will give the participants a few chances to understand the test before actually recording as to get used to the process for more accurate baseline results, in this case we gave them 2 attempts to understand the game. The end goal is to test whether there is a significant difference between those in the treatment goal and placebo group. Our hypothesis is that there is no difference between the two groups. 
+
+The reasoning behind our decisions here is that randomly assigning people instead of groups, goes back to the concept that we are unaware of how many people will take part in our experiment so we must randomize at the individual level. As for the best way to administer CBD is one of those dictated by legend rather than any studies and we are not trying to find the right method but rather the effects we followed numerous suggestions derived from multiple different sources online and at stores where it is sold. It is believed that 60 seconds is enough time for most of the CBD to be absorbed into the bloodstream. We waited 3 minutes for people to get comfortable after holding in their mouth and hope that it will spread more throughout their body. This concept of how long does it take to impact a person is again more legend than fact, we utilized the same places to understand how long it would take to impact people. This concept will be more developed in the limitations section of our paper, later on. We gave people two attempts of understanding the game to get people familiar with the game so as to not have any crazy high outliers at the beginning of their tests.
+
+ 
+### Another Important Aspect - The Test
+
+We wanted to see if CBD impaired people. Obviously to see if it impaired people we needed to test people. Finding the right test was hard. Our team researched tests that were designed to check on cognitive impairment but most of those were designed to find more severe effects, that drastically impacted memory. We were more concerned in the slight impairments as we know this drug is a non-psychoactive and non-intoxicating chemical, like reaction time. We decided to utilize the reaction time game that is free on Human Benchmark's website as seen in the Collaboration Statement section.
+
+**EDA**
+
+To get a better understanding of our data, we decided to explore a little bit about our our data. In this experiment, we tested 44 individuals in total: 15 of them are female, and 29 of them are male. The age range of the observations are 21 to 33. Among these observations, we randomly selected them into treatment group (23 observations) or placebo group (21 observations).
+
+Our dataset has 6 columns. The columns not only contained some variables about unique ID, gender, and age but it also contained variables such as the reaction time before and then also after the treatment/placebo adminstration.
+
+```{r echo=FALSE, fig.width=14, fig.height=5}
+cbd %>%
+  mutate(treatment = ifelse(treatment == 'A', 0, 1)) %>%
+  select(id, gender = `gender (1/0)`, everything())-> cbd1
+names(cbd1) = str_to_lower(names(cbd1))
+cbd1 %>% 
+  gather(., "before", "after", key = "time", value = "reflection_time") %>%
+  mutate(gender = ifelse(gender == 0, "female", "male")) %>%
+  mutate(treatment = ifelse(treatment == 0, "placebo", "treatment")) -> cbd2
+ggplot(cbd2, aes(x = factor(gender), y = reflection_time, fill = time)) +
+  geom_boxplot() + 
+  facet_grid(~treatment) +
+  labs(x = 'gender', y = "refection time", 
+       title = "Figure1: The distribution in reaction time based on gender and experiment") -> p1
+
+cbd %>% ggplot(aes(x= factor(`gender (1/0)`), y = diff, fill = treatment))+
+  geom_boxplot() +
+  labs(
+       title = "Figure2: The difference in reaction time based on gender",
+       y = "difference",
+       x = "female                                             male") -> p2
+
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+Figure 1 shows the distribution of reaction test time before and after the experiment, categorized by gender, and treatment/placebo group. For female before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both two female groups’ performances were increased and the reaction time was dropped. But the time declined larger for females in the placebo group than treatment group. As for males before the experiment, the reaction time for placebo group is relatively higher than treatment group. After the experiment, the reaction time for both groups was decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group. 
+
+Figure 2 is a more concretely inspection from Figure 1, showing the difference in reaction time based on gender. All of the `difference` are above 0, means that participants will have shorter reaction time after experiment. The reduced reaction time can be explained by the manipulation in the second reaction testing. Compared with placebo group, the treatment group has less difference which indicats that the reaction time reduced less after using the CBD. There is more difference between placebo group and experiment group for female than male, which reveals that female are more easily affected by the CBD.
+
+
+# Regression
+### Regression With Fixed Effect
+In order to measure the effects of the treatment precisely, we can put in age and gender fixed effects. We decided to apply three different fixed effects: only age, only gender and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied `gender` as fixed effect. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=14, fig.height=5}
+treat1 = felm(diff ~ treatment, data = cbd1)
+treat2 = felm(diff ~ treatment | age, data = cbd1)
+treat3 = felm(diff ~ treatment | gender, data = cbd1)
+treat4 = felm(diff ~ treatment | age + gender, data = cbd1)
+stargazer(treat1, treat2, treat3, treat4, type = "text")
+```
+
+### Regression: Co-Variance
+
+We use fixed linear regression to inspect the covariance between the treatment and other interactive variables. Since the performance for reaction test is varied over personal physical factors, we collected the gender and age inform from participants as two interactive variables which also would affect the reaction test outcome.  We try to inspect whether there exists significantly covariance between the treatment and the variable gender and age. And for a more reliable regression outcome, we take one interactive variable as a fixed effect when we test the other interactive variable. 
+There are the two regression, and the result is showed at the following table;
+            **difference = treatment + gender + treatment*gender**
+            **difference = treatment + age + treatment*age**
+            
+The result indicated that in both two regression models, the effect of CBD oil on difference in reaction time is not significant with the interacted effect from gender and age. And both the covariance of treatment to gender and the covariance of treatment to age are not significant. We cannot reject the hypothesis that there doesn’t exist any covariance between both CBD treatment to gender and CBD treatment to age. In summary, we conclued that the CBD has no effect on people's reaction time. 
+
+```{r echo=FALSE, warning=FALSE, massage=FALSE, fig.width=14, fig.height=5}
+treat_n_gender = felm(diff ~ treatment * gender | age, data = cbd1)
+treat_n_age = felm(diff ~ treatment * age | gender, data = cbd1)
+stargazer(treat_n_gender, treat_n_age, type = "text")
+```
+
+## Limitations We Discovered and Know From Our Expirement
+There are several limitations in our study. We tried our best to run the experiment in a perfect vaccum, however, our study had several limitations. Below are the five main limitations: 
+1. The first challenge we met was the sample size of the experiment. Because CBD oil is a new product, it is hard to find people willing to participate in the experiment. The total sample we got is only 44. This is due to the concern that we wanted knowledge, consenting participants that were okay with being part of this experiment and a lot of people were not. 
+2. During the experiment, some of the experimenters could see what treatment they were assigned to. Thus it is possible this affects their behavior. Our experiment is not double blind. There were differences between both colors and taste which some people may have noticed. We wanted to make sure all partipants were knowledgeable about what they just took placebo or treatment. Thus some people could deduce which they were given from us telling the participants what they recieved due the nature of this experiment and wanting people to be comfortable with it.  
+3. The experiment could not fully meet the excludability concern. Because some people know not only what they took, they also knew what other people took. Thus they communicated it to others without regarding the infringement on the results and observation. Part of the treatment group was affected by the placebo group and vice-versa.
+4. Most people who attend the experiment were among the ages of 21 to 25. There is a limitation on the age range. The result of the experiment can’t explain all people's behavior for all ages.
+5. Over 90% of people get a higher score after they were assigned to either the treatment or placebo, and some people have a big improvement after playing the first round. We have concerns because of the warm-up exercise is not enough for people to get familiar with the experiment in the first test recording. We should have set more warm-up exercises for people so that can reduce the bias from the familiarity of the game.
+
+
+# Collaboration Statement 
+The Participants - We are thankful for the help of those that took part in our experiment.
+
+SAS (http://support.sas.com/resources/papers/sixsigma1.pdf) - Helped to formulate and think about some of the responses we gave.
+
+StackOverflow - Utilized this platform to answer questions regarding R code. 
+
+Google Drive - We utilzied this service for our project. 
+
+Human Benchmark (https://www.humanbenchmark.com/) - We utilized a reaction time game to consitute as our cognitive ability test. 
+
+
+
+
+
+
+
+
+
+
+
 
 
 

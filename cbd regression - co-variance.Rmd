@@ -39,6 +39,12 @@ ggplot(cbd1, aes(x = factor(gender), y = reflection_time, fill = time)) +
 ```
 
 ## Linear regression vs. fixed regression 
+
+## Regression with fixed effect
+
+In order to measure the effects of the treatment precisely, we can put in age and gender fixed effects. We decided to apply three different fixed effects: only age, only gender and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied both of them as fixed effects. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
+
+
 ```{r, warning=FALSE, message=FALSE}
 treat1 = felm(diff ~ treatment, data = cbd)
 treat2 = felm(diff ~ treatment | age, data = cbd)

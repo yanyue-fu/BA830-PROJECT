@@ -103,7 +103,7 @@ There are several limitations in our study. We tried our best to run the experim
 1. The first challenge we met was the sample size of the experiment. Because CBD oil is a new product, it is hard to find people willing to participate in the experiment. The total sample we got is only 40 which didn’t meet size of experiment size that designed.
 2. During the experiment, some of the experimentees see what treatment they’ve assigned. Thus it is possible this affects their behavior. Our experiment is not double blind. 
 3. The experiment is not fully meet exclubitility. Because some people know not only what they took, they also knew what other people took. Thus they communicated. Part of the treatment group was affected by the placebo group. 
-4. Most people who attend the experiment is among 21-25. There is a limitation on the age range. The result of the experiment can’t explain all people's behavior.
+4. Most people who attend the experiment is among 21-25. There is a limitation on the age range. The result of the experiment can’t explain all people’s behaviro who are not within the age range.
 5. Over 90% of people get a higher score after the assign the treatment or placebo, and some people have a big improvement after playing the first round. We concern may be the warm-up exercise is not enough for people to get familiar with the experiment. We should set more warm-up exercise to people so that can reduce the bias from the familiarity of the game. 
 
 

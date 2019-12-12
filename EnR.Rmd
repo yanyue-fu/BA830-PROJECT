@@ -24,11 +24,13 @@ cbd = read_csv("cbd-cleaned.csv")
 `diff`: The difference in reaction time between pre-experiment and post-experiment (`before` - `after`).
 
 **EDA**
-To get a better understanding of our cbd and gain some insight through exploring cbd, we did the Exploratory cbd analysis.
-Figure 1 shows the distribution of reaction test time before and after the experiment, categorized by gender and treatment/placebo group. For female before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both two female groups’ performances were increased, the reaction time is dropped. But the time declined larger for females in the placebo group instead of treatment group. 
+
+To get a better understanding of our cbd and gain some insight through exploring cbd, we did the Exploratory cbd analysis. Figure 1 shows the distribution of reaction test time before and after the experiment, categorized by gender and treatment/placebo group. For female before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both two female groups’ performances were increased and the reaction time was dropped. But the time declined larger for females in the placebo group than treatment group. 
+
+
 For males before the experiment, the reaction time for placebo group is relatively higher than treatment group. After the experiment, the reaction time for both groups was decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group. 
 
-```{r}
+```{r echo=FALSE}
 cbd %>%
   mutate(treatment = ifelse(treatment == 'A', 0, 1)) %>%
   select(id, gender = `gender (1/0)`, everything())-> cbd1
@@ -44,20 +46,20 @@ ggplot(cbd2, aes(x = factor(gender), y = reflection_time, fill = time)) +
        title = "Figure1: The distribution in reaction time based on gender and experiment")
 ```
 
-Figure 2 is a more concretely inspection from Figure 1, showing the difference in reaction time based on gender. It shows the difference in reaction time based on gender. All of the `difference` are above 0, means that participants will have shorter reaction time after experiment. The reduced reaction time can be explained by the manipulation in the second reaction testing. Compared with placebo group, the treatment group has less difference which indicats that the reaction time reduced less after using the CBD. There is more difference between placebo group and experiment group for female than male, which reveals that female are more easily affected by the CBD.
+Figure 2 is a more concretely inspection from Figure 1, showing the difference in reaction time based on gender. All of the `difference` are above 0, means that participants will have shorter reaction time after experiment. The reduced reaction time can be explained by the manipulation in the second reaction testing. Compared with placebo group, the treatment group has less difference which indicats that the reaction time reduced less after using the CBD. There is more difference between placebo group and experiment group for female than male, which reveals that female are more easily affected by the CBD.
 
-```{r}
+```{r echo=FALSE}
 cbd %>% ggplot(aes(x= factor(`gender (1/0)`), y = diff, fill = treatment))+
   geom_boxplot() +
   labs(
-       title = "Figure1: The difference in reaction time based on gender",
+       title = "Figure2: The difference in reaction time based on gender",
        y = "difference",
        x = "female                                             male")
 ```
 
-Figure2 shows the average difference For Each Age Bin. Since the interval of participants' age is 18 to 35 in our experiment, we decided to separte them into 4 age bins for analysis. Age Bin By 5 (1 = 20-25, 2 = 25-30, 3 = 30-35). CBD has the greatest impact on the people among 25 to 30 years old and has least impact on people among 20 to 25 years old.
+Figure 3 shows the average difference For Each Age Bin. Since the interval of participants' age is 21 to 35 in our experiment, we decided to separte them into 3 age bins for analysis. Age Bin By 5 (1 = 20-25, 2 = 25-30, 3 = 30-35). CBD has the greatest impact on the people among 25 to 30 years old and has least impact on people among 20 to 25 years old.
 
-```{r}
+```{r echo=FALSE}
 cbd$ageRange <- findInterval(cbd$AGE, c(20, 25, 30, 35))
 cbd %>% 
   group_by(ageRange,treatment) %>% 
@@ -73,7 +75,7 @@ cbd %>%
 ## Regression
 # Regression with fixed effect
 In order to measure the effects of the treatment precisely, we can put in age and gender fixed effects. We decided to apply three different fixed effects: only age, only gender and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied `gender` as fixed effect. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
-```{r, warning=FALSE, message=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 treat1 = felm(diff ~ treatment, data = cbd1)
 treat2 = felm(diff ~ treatment | age, data = cbd1)
 treat3 = felm(diff ~ treatment | gender, data = cbd1)
@@ -87,9 +89,10 @@ We use fixed linear regression to inspect the covariance between the treatment a
 There are the two regression, and the result is showed at the following table;
             **difference = treatment + gender + treatment*gender**
             **difference = treatment + age + treatment*age**
-The result indicated that in both two regression models, the effect of CBD oil on difference in reaction time is not significant with the interacted effect from gender and age. And both the covariance of treatment to gender and the covariance of treatment to age are not significant. We cannot reject the hypothesis that there doesn’t exist any covariance between both CBD treatment to gender and CBD treatment to age.  
+            
+The result indicated that in both two regression models, the effect of CBD oil on difference in reaction time is not significant with the interacted effect from gender and age. And both the covariance of treatment to gender and the covariance of treatment to age are not significant. We cannot reject the hypothesis that there doesn’t exist any covariance between both CBD treatment to gender and CBD treatment to age. In summary, we conclued that the CBD has no effect on people's reaction time. 
 
-```{r massage=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, massage=FALSE}
 treat_n_gender = felm(diff ~ treatment * gender | age, data = cbd1)
 treat_n_age = felm(diff ~ treatment * age | gender, data = cbd1)
 stargazer(treat_n_gender, treat_n_age, type = "text")

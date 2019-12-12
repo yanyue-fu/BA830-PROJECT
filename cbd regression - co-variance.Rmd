@@ -25,7 +25,7 @@ names(cbd) = str_to_lower(names(cbd))
 ```
 
      Plot by the gender and test difference in treatment group and control group. For female before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both two female groups’ performances were increased, the reaction time is dropped. But the time declined larger for females in the placebo group instead of treatment group. 
-     For males before the experiment, the reaction time for placebo group is relatively higher than treatment group. After the experiment, the reaction time for both groups was decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group. 
+     For males before the experiment, the reaction time for placebo group is relatively higher than treatment group. After the experiment, the reaction time for both groups was decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group.   
      
 ```{r}
 cbd %>% 
@@ -42,8 +42,7 @@ ggplot(cbd1, aes(x = factor(gender), y = reflection_time, fill = time)) +
 
 ## Regression with fixed effect
 
-In order to measure the effects of the treatment precisely, we can put in age and gender fixed effects. We decided to apply three different fixed effects: only age, only gender and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied both of them as fixed effects. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
-
+In order to measure the effects of the treatment precisely, we can put in age and gender fixed effects. We decided to apply three different fixed effects: only age, only gender and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied `gender` as fixed effect. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
 
 ```{r, warning=FALSE, message=FALSE}
 treat1 = felm(diff ~ treatment, data = cbd)

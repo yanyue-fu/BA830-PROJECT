@@ -10,9 +10,9 @@ glimpse(data)
 data$X1 = NULL
 data$`Unique ID` = NULL
 data$diff = data$before - data$after
-data$id = 1:40
+data$id = 1:44
 data = data %>% select(id, everything())
-# write_csv(data, "cbd-cleaned.csv")
+write_csv(data, "cbd-cleaned.csv")
 
 # EDA
 # The "difference" is the difference between the before reaction time and the 

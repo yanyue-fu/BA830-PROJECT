@@ -38,6 +38,15 @@ ggplot(cbd1, aes(x = factor(gender), y = reflection_time, fill = time)) +
   labs(x = 'gender', y = "refection time")
 ```
 
+## Linear regression vs. fixed regression 
+```{r, warning=FALSE, message=FALSE}
+treat1 = felm(diff ~ treatment, data = cbd)
+treat2 = felm(diff ~ treatment | age, data = cbd)
+treat3 = felm(diff ~ treatment | gender, data = cbd)
+treat4 = felm(diff ~ treatment | age + gender, data = cbd)
+stargazer(treat1, treat2, treat3, treat4, type = "text")
+```
+
     
 ## regression about co-variance
 
@@ -52,8 +61,6 @@ treat_n_gender = felm(diff ~ treatment * gender | age, data = cbd)
 treat_n_age = felm(diff ~ treatment * age | gender, data = cbd)
 stargazer(treat_n_gender, treat_n_age, type = "text")
 ```
-
-  
 
 
   

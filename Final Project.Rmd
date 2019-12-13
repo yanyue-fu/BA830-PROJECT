@@ -31,7 +31,7 @@ CBD is legal under federal laws as long as the product does not contain more tha
 
 # What We Are Looking For
 
-With the growing use of these products it naturally poses the question, is there are any effects of taking the product especially in regards to cognitive function. The goal of the team is to see if there is an effect of using CBD on cognitive function. The importance of making this discovery is having a better understanding of the possible risks of taking the product and the possibility of making better legislation for the product if the effects are negatively impacting cognitive function, like possible bans on driving if you consumed the product recently. This would make for a more educated and hopefully safer populace. On the other hand, if there shows no evidence of impairing cognitive function there could be possible better legislation for allowing more legality and laissez-faire rules for CBD, which many people believe brings them great benefits and would allow for more people to try alternative means to their ailments. To sum this up the question we are looking to answer is does CBD cause an effect on cognitive function. 
+With the growing use of these products it naturally poses the question, is there are any effects of taking the product especially in regards to cognitive function. The goal of the team is to see if there is an effect of using CBD on cognitive function. The importance of making this discovery is having a better understanding of the possible risks of taking the product and the possibility of making better legislation for the product if the effects are negatively impacting cognitive function, like possible bans on driving if you consumed the product recently. This would make for a more educated and hopefully safer populace. On the other hand, if there shows no evidence of impairing cognitive function there could be possible better legislation for allowing more legality and laissez-faire rules for CBD, which many people believe brings them great benefits and would allow for more people to try alternative means to their ailments. To sum this up the question we are looking to answer is does CBD cause an effect on cognitive function. We will be using a null hypothesis test for this and that will be that there is no difference between those who took CBD and those who did not for cognitive impairment. 
 
 # Our Experimental Design
 
@@ -72,9 +72,9 @@ We wanted to see if CBD impaired people. Obviously to see if it impaired people 
 
 **EDA**
 
-To get a better understanding of our data, we decided to explore a little bit about our our data. In this experiment, we tested 44 individuals in total: 15 of them are female, and 29 of them are male. The age range of the observations are 21 to 33. Among these observations, we randomly selected them into treatment group (23 observations) or placebo group (21 observations).
+To get a better understanding of our data, we decided to explore a little bit about our data. In this experiment, we tested 44 individuals in total: 15 of them are female and 29 of them are male. The age range of the observations are 21 to 33. Among these observations, we randomly selected them into treatment group (23 observations) or placebo group (21 observations).
 
-Our dataset has 6 columns. The columns not only contained some variables about unique ID, gender, and age but it also contained variables such as the reaction time before and then also after the treatment/placebo adminstration.
+Our dataset has 6 columns. The columns not only contained some variables about unique ID, gender, and age but it also contained variables such as the reaction time before and then also after the treatment/placebo administration.
 
 ```{r echo=FALSE, fig.width=14, fig.height=5}
 cbd %>%
@@ -103,14 +103,14 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```
 
-Figure 1 shows the distribution of reaction test time before and after the experiment, categorized by gender, and treatment/placebo group. For female before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both two female groups’ performances were increased and the reaction time was dropped. But the time declined larger for females in the placebo group than treatment group. As for males before the experiment, the reaction time for placebo group is relatively higher than treatment group. After the experiment, the reaction time for both groups was decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group. 
+Figure 1 shows the distribution of reaction test time before and after the experiment, categorized by gender, and treatment/placebo group. For females before taking the experiment, the reaction time in the placebo group are relatively more concentrated and lower than the female observations in the treatment group. After the experiment, both female groups’ performances were increased and the reaction time was dropped. But the time declined larger for females in the placebo group than the treatment group. As for males before the experiment, the reaction time for placebo group is relatively higher than the treatment group. After the experiment, the reaction time for both groups decreased but the placebo group decreased slightly more than the treatment group. The result implied the effect of CBD oil actually is unobvious since there is not a high-increased performance for the treatment group when compared to the control group. 
 
-Figure 2 is a more concretely inspection from Figure 1, showing the difference in reaction time based on gender. All of the `difference` are above 0, means that participants will have shorter reaction time after experiment. The reduced reaction time can be explained by the manipulation in the second reaction testing. Compared with placebo group, the treatment group has less difference which indicats that the reaction time reduced less after using the CBD. There is more difference between placebo group and experiment group for female than male, which reveals that female are more easily affected by the CBD.
+Figure 2 is a more concrete inspection from Figure 1, showing the difference in reaction time based on gender. All of the `difference` are above 0, means that participants will have shorter reaction time after experiment. The reduced reaction time can be explained by the manipulation in the second reaction testing. Compared with placebo group, the treatment group has less difference which indicates that the reaction time reduced less after using the CBD. There is more difference between placebo group and experiment group for female than male, which reveals that female are more easily affected by the CBD.
 
 
 # Regression
 ### Regression With Fixed Effect
-In order to measure the effects of the treatment precisely, we can put in age and gender fixed effects. We decided to apply three different fixed effects: only age, only gender and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied `gender` as fixed effect. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
+In order to measure the effects of the treatment precisely, we can put in age and gender as fixed effects. We decided to apply three different fixed effects: only age, only gender, and both of them. Given that regressions allow us to compute standard errors, we observed that the standard error has declined when we applied `gender` as a fixed effect. However, the variable `treatment` is not statistically significant so we cannot reject the null hypothesis.
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=14, fig.height=5}
 treat1 = felm(diff ~ treatment, data = cbd1)
 treat2 = felm(diff ~ treatment | age, data = cbd1)
@@ -121,12 +121,14 @@ stargazer(treat1, treat2, treat3, treat4, type = "text")
 
 ### Regression: Co-Variance
 
-We use fixed linear regression to inspect the covariance between the treatment and other interactive variables. Since the performance for reaction test is varied over personal physical factors, we collected the gender and age inform from participants as two interactive variables which also would affect the reaction test outcome.  We try to inspect whether there exists significantly covariance between the treatment and the variable gender and age. And for a more reliable regression outcome, we take one interactive variable as a fixed effect when we test the other interactive variable. 
-There are the two regression, and the result is showed at the following table;
-            **difference = treatment + gender + treatment*gender**
+We use fixed linear regression to inspect the covariance between the treatment and other interactive variables. Since the performance for reaction test is varied over personal physical factors, we collected the gender and age variables from the participants as two interactive variables which also would affect the reaction test outcome.  We tried to inspect whether there exists significant covariance between the treatment and the variable gender and age. And for a more reliable regression outcome, we take one interactive variable as a fixed effect when we test the other interactive variable. 
+There are the two regressions, and the result is showed at the following table;
+
+            **difference = treatment + gender + treatment*gender** 
+            
             **difference = treatment + age + treatment*age**
             
-The result indicated that in both two regression models, the effect of CBD oil on difference in reaction time is not significant with the interacted effect from gender and age. And both the covariance of treatment to gender and the covariance of treatment to age are not significant. We cannot reject the hypothesis that there doesn’t exist any covariance between both CBD treatment to gender and CBD treatment to age. In summary, we conclued that the CBD has no effect on people's reaction time. 
+The result indicated that in both two regression models, the effect of CBD oil on difference in reaction time is not significant with the interacted effect from gender and age. And both the covariance of treatment to gender and the covariance of treatment to age are not significant. We cannot reject the hypothesis that there doesn’t exist any covariance between both CBD treatments to gender and CBD treatment to age. In summary, we conclude that the CBD has no effect on people's cognitive impairment, through a reaction time test.
 
 ```{r echo=FALSE, warning=FALSE, massage=FALSE, fig.width=14, fig.height=5}
 treat_n_gender = felm(diff ~ treatment * gender | age, data = cbd1)
